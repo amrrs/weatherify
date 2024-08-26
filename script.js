@@ -5,6 +5,7 @@ const cityName = document.getElementById('city-name');
 const temperature = document.getElementById('temperature');
 const description = document.getElementById('description');
 const weatherIcon = document.getElementById('weather-icon-elem');
+const shareBtns = document.querySelectorAll('.share-btn');
 
 const API_KEY = 'YOUR_API_KEY'; // Replace with your OpenWeatherMap API key
 
@@ -63,8 +64,44 @@ function setWeatherIcon(weatherCode) {
     weatherIcon.className = `fas ${iconClass}`;
 }
 
-// Autocomplete functionality
-const cities = ['New York', 'London', 'Paris', 'Tokyo', 'Sydney', 'Moscow', 'Dubai', 'Singapore', 'Rome', 'Berlin', 'Toronto', 'Hong Kong', 'Bangkok', 'Istanbul', 'Mumbai', 'Seoul', 'Mexico City', 'São Paulo', 'Cairo', 'Los Angeles', 'Beijing', 'Amsterdam', 'Vienna', 'Madrid', 'Stockholm', 'Prague', 'Warsaw', 'Budapest', 'Athens', 'Lisbon', 'Dublin', 'Copenhagen', 'Oslo', 'Helsinki', 'Zurich', 'Brussels', 'Barcelona', 'Milan', 'Munich', 'Frankfurt', 'Vancouver', 'Montreal', 'Chicago', 'San Francisco', 'Boston', 'Washington D.C.', 'Miami', 'Seattle', 'Dallas', 'Houston'];
+// Social share functionality
+shareBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+        const platform = this.getAttribute('data-platform');
+        const text = `Check out the weather in ${cityName.textContent}: ${temperature.textContent}, ${description.textContent}`;
+        const url = encodeURIComponent(window.location.href);
+        
+        let shareUrl;
+        switch(platform) {
+            case 'facebook':
+                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                break;
+            case 'twitter':
+                shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${url}`;
+                break;
+            case 'linkedin':
+                shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=Weather%20Update&summary=${encodeURIComponent(text)}`;
+                break;
+        }
+        
+        window.open(shareUrl, '_blank', 'width=600,height=400');
+    });
+});
+
+// Fetch cities for autocomplete
+let cities = [];
+fetch('https://countriesnow.space/api/v0.1/countries/population/cities')
+    .then(response => response.json())
+    .then(data => {
+        cities = data.data.map(city => city.city);
+        autocomplete(cityInput, cities);
+    })
+    .catch(error => {
+        console.error('Error fetching cities:', error);
+        // Fallback to a smaller list if API fails
+        cities = ['New York', 'London', 'Paris', 'Tokyo', 'Sydney'];
+        autocomplete(cityInput, cities);
+    });
 
 function autocomplete(inp, arr) {
     let currentFocus;
@@ -131,5 +168,3 @@ function autocomplete(inp, arr) {
         closeAllLists(e.target);
     });
 }
-
-autocomplete(cityInput, cities);
