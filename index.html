@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weatherify - Weather App</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Weatherify</h1>
+        <p class="subtitle">Brand new weather app that makes you up to date</p>
+        <div class="search-box">
+            <input type="text" id="city-input" placeholder="Enter a city name">
+            <button id="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+        <div id="weather-card" class="weather-card hidden">
+            <div class="weather-icon">
+                <i id="weather-icon-elem" class="fas"></i>
+            </div>
+            <div class="weather-info">
+                <h2 id="temperature"></h2>
+                <p id="description"></p>
+                <p id="city-name"></p>
+            </div>
+            <div class="weather-details">
+                <div class="detail">
+                    <i class="fas fa-wind"></i>
+                    <span id="wind-speed"></span>
+                </div>
+                <div class="detail">
+                    <i class="fas fa-tint"></i>
+                    <span id="humidity"></span>
+                </div>
+                <div class="detail">
+                    <i class="fas fa-sun"></i>
+                    <span id="uv-index"></span>
+                </div>
+            </div>
+        </div>
+        <div class="social-share">
+            <button class="share-btn" data-platform="facebook"><i class="fab fa-facebook-f"></i></button>
+            <button class="share-btn" data-platform="twitter"><i class="fab fa-twitter"></i></button>
+            <button class="share-btn" data-platform="linkedin"><i class="fab fa-linkedin-in"></i></button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
